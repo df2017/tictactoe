@@ -31,4 +31,3 @@ __pycache__
 db
 *.env
 migrations
-settings.py
