@@ -1,13 +1,13 @@
 
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from .views import BoardView
-from .apiview import BoardApiCreate,BoardApiUpdate
+from .views import BoardView, MoveView
+from .apiview import BoardApiUpdate
 
 urlpatterns = [
     path('board/', BoardView.as_view(), name='board'),
-    path('api_game/', BoardApiCreate.as_view(), name='api_post'),
-    path('api_game/<int:id>/', BoardApiUpdate.as_view(), name='api_put'),
+    path('move/', MoveView.as_view(), name='move'),
+    path('api_game/<int:id>/', BoardApiUpdate.as_view(), name='apiput'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -1,0 +1,15 @@
+table {
+	 width: 100%;
+}
+
+td,th {
+	text-align: center;
+	font-size:50px;
+	font-family:Helvetica;
+	width: 25%;
+}
+
+img {
+	width: 50%;
+	margin-right: 0%;
+}

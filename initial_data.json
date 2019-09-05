@@ -1,0 +1,6 @@
+[
+{"model": "game.board", 
+"pk": 3, 
+"fields": {"column_a": null, "column_b": null, "column_c": null}
+}
+]

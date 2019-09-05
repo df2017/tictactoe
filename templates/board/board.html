@@ -8,44 +8,108 @@
         <div class="col-xl">
         </div>
         <div class="col-xl-5">
-            <table class="table table-active table-bordered">
-                <thead>
-                <tr>
-
-                </tr>
-                </thead>
-                <tbody>
-                {% if object_list %}
-                {% for r in object_list %}
-                <tr>
-                    <td style="text-align:center;">{{r.column_a}}</td>
-                    <td style="text-align:center;">{{r.column_b}}</td>
-                    <td style="text-align:center;">{{r.column_c}}</td>
-                </tr>
-                {% endfor %}
-                {% else %}
-                {% for r in rows %}
-                <tr>
-                    <td style="text-align:center;">{{r.A}}</td>
-                    <td style="text-align:center;">{{r.B}}</td>
-                    <td style="text-align:center;">{{r.C}}</td>
-                </tr>
-                {% endfor %}
-                {% endif %}
-                </tbody>
-            </table>
-            <form class="form-inline">
-                <div class="form-group mx-sm-3 mb-2">
-                    <label class="sr-only">Password</label>
-                    <input type="text" class="form-control" placeholder="Ingresar Nro 1-9">
+            <div class="card text-center">
+                <div class="card-header text-white bg-secondary mb-3">
+                    <h3>Tic Tac Toe</h3>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">OK</button>
-            </form>
+                <div class="card-body">
+                    <h5 class="card-title">Touch to Start</h5>
+                    <br>
+                    <p class="card-text">
+                    <table>
+                        <thead>
+                        <tr>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <td>
+
+                                {% if colA.0 != "-" %}
+                                <a href="/move/">{{colA.0}}</a>
+                                {% else %}
+                                <a href="{% url 'move' %}" type="submit"><img src="../static/images/button.png"/></a>
+                                {% endif %}
+
+                            </td>
+                            <td>
+                                {% if colB.0 != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colB.0}}</a>
+                                {% else %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if colC.0 != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colC.0}}</a>
+                                {% else %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {% if colA.1 != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colA.1}}</a>
+                                {% else %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if colB.1 != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colB.1}}</a>
+                                {% else %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if colC.1 != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colC.1}}</a>
+                                {% else %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {% if colA.2 != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colA.2}}</a>
+                                {% else %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if colB.2 != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colB.2}}</a>
+                                {% else %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if colC.2 != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colC.2}}</a>
+                                {% else %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    </p>
+                    <br>
+                </div>
+                <div class="card-footer text-muted">
+                    <form class="form-inline">
+                    <button class="btn btn-success mx-sm-3" type="submit">Continue Game</button>
+                    <button class="btn btn-danger ml-auto mr-4" type="submit">Quit</button>
+                        </form>
+                </div>
+            </div>
+
         </div>
         <div class="col-xl">
-            <br>
-            <button class="btn btn-success" type="submit">Continue Game</button>
-            <button class="btn btn-danger" type="submit">Save and back</button>
         </div>
     </div>
 </div>

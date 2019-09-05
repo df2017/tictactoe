@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Player, Board
+from .models import Player, Board,BoardAdmin,PlayerAdmin
 # Register your models here.
 
-admin.site.register(Player)
-admin.site.register(Board)
+admin.site.register(Player,PlayerAdmin)
+admin.site.register(Board,BoardAdmin)
 
