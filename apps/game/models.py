@@ -1,20 +1,20 @@
 from django.db import models
 from django.contrib import admin
-
+import datetime
 
 class Player(models.Model):
     idp = models.AutoField(primary_key=True)
     users = models.CharField(max_length=1, null=True)
     turn = models.BooleanField(default=False)
-    win = models.IntegerField(max_length=1000)
-    crt_date = models.DateTimeField(auto_now=True)
+    win = models.IntegerField(null=True)
+    crt_date = models.DateTimeField(default=datetime.datetime.now)
 
     def __str__(self):
         return (self.idp, self.users)
 
 
 class PlayerAdmin(admin.ModelAdmin):
-    list_display = ('idp', 'users', 'turn', 'win')
+    list_display = ('idp', 'users', 'turn', 'win','crt_date')
 
 
 class Board(models.Model):
@@ -32,4 +32,7 @@ class BoardAdmin(admin.ModelAdmin):
 
 class Move(models.Model):
     idm = models.AutoField(primary_key=True)
-    position = models.CharField(max_length=2000,null=True)
+    position = models.CharField(max_length=500,null=True)
+
+class MoveAdmin(admin.ModelAdmin):
+    list_display = ('idm', 'position')

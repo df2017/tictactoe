@@ -24,48 +24,25 @@
                         <tbody>
 
                         <tr>
-                            <td>
 
-                                {% if colA.0 != "-" %}
-                                <a href="/move/">{{colA.0}}</a>
+                            <td>
+                                {% if  boards.0.column_a != "-" %}
+                                <a href="/move/">{{boards.0.column_a}}</a>
                                 {% else %}
                                 <a href="{% url 'move' %}" type="submit"><img src="../static/images/button.png"/></a>
                                 {% endif %}
 
                             </td>
                             <td>
-                                {% if colB.0 != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colB.0}}</a>
+                                {% if boards.0.column_b != "-" %}
+                                <a href="">{{boards.0.column_b}}</a>
                                 {% else %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                <a href=""><img src="../static/images/button.png"/></a>
                                 {% endif %}
                             </td>
                             <td>
-                                {% if colC.0 != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colC.0}}</a>
-                                {% else %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {% if colA.1 != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colA.1}}</a>
-                                {% else %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if colB.1 != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colB.1}}</a>
-                                {% else %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if colC.1 != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colC.1}}</a>
+                                {% if  boards.0.column_c != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{boards.0.column_b}}</a>
                                 {% else %}
                                 <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
                                 {% endif %}
@@ -73,22 +50,45 @@
                         </tr>
                         <tr>
                             <td>
-                                {% if colA.2 != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colA.2}}</a>
+                                {% if  boards.1.column_a != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{boards.1.column_a}}</a>
                                 {% else %}
                                 <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
                                 {% endif %}
                             </td>
                             <td>
-                                {% if colB.2 != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colB.2}}</a>
+                                {% if boards.1.column_b != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{boards.1.column_b}}</a>
                                 {% else %}
                                 <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
                                 {% endif %}
                             </td>
                             <td>
-                                {% if colC.2 != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{colC.2}}</a>
+                                {% if boards.1.column_c != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{boards.1.column_c}}</a>
+                                {% else %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {% if boards.2.column_a != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{boards.2.column_a}}</a>
+                                {% else %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if boards.2.column_b != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{boards.2.column_b}}</a>
+                                {% else %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if boards.2.column_c != "-" %}
+                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{boards.2.column_c}}</a>
                                 {% else %}
                                 <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
                                 {% endif %}
