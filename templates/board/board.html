@@ -6,6 +6,7 @@
     <br>
     <div class="row">
         <div class="col-xl">
+            Usuario:
         </div>
         <div class="col-xl-5">
             <div class="card text-center">
@@ -22,75 +23,72 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         <tr>
-
                             <td>
-                                {% if  boards.0.column_a != "-" %}
-                                <a href="/move/">{{boards.0.column_a}}</a>
+                                {% if boards.0.column_a != "-" %}
+                                <a href="/move/1/">{{boards.0.column_a}}</a>
                                 {% else %}
-                                <a href="{% url 'move' %}" type="submit"><img src="../static/images/button.png"/></a>
+                                <a href="/move/1/"><img src="/static/images/button.png"/></a>
                                 {% endif %}
-
                             </td>
                             <td>
                                 {% if boards.0.column_b != "-" %}
-                                <a href="">{{boards.0.column_b}}</a>
+                                <a href="/move/2/">{{boards.0.column_b}}</a>
                                 {% else %}
-                                <a href=""><img src="../static/images/button.png"/></a>
+                                <a href="/move/2/"><img src="/static/images/button.png"/></a>
                                 {% endif %}
                             </td>
                             <td>
-                                {% if  boards.0.column_c != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{boards.0.column_b}}</a>
+                                {% if boards.0.column_c != "-" %}
+                                <a href="/move/3/">{{boards.0.column_c}}</a>
                                 {% else %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                <a href="/move/3/"><img src="/static/images/button.png"/></a>
                                 {% endif %}
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                {% if  boards.1.column_a != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{boards.1.column_a}}</a>
+                                {% if boards.1.column_a != "-" %}
+                                <a href="/move/4/">{{boards.1.column_a}}</a>
                                 {% else %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                <a href="/move/4/"><img src="/static/images/button.png"/></a>
                                 {% endif %}
                             </td>
                             <td>
                                 {% if boards.1.column_b != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{boards.1.column_b}}</a>
+                                <a href="/move/5/">{{boards.1.column_b}}</a>
                                 {% else %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                <a href="/move/5/"><img src="/static/images/button.png"/></a>
                                 {% endif %}
                             </td>
                             <td>
                                 {% if boards.1.column_c != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{boards.1.column_c}}</a>
+                                <a href="/move/6/">{{boards.1.column_c}}</a>
                                 {% else %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                <a href="/move/6/"><img src="/static/images/button.png"/></a>
                                 {% endif %}
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 {% if boards.2.column_a != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{boards.2.column_a}}</a>
+                                <a href="/move/7/">{{boards.2.column_a}}</a>
                                 {% else %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                <a href="/move/7/"><img src="/static/images/button.png"/></a>
                                 {% endif %}
                             </td>
                             <td>
                                 {% if boards.2.column_b != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{boards.2.column_b}}</a>
+                                <a href="/move/8/">{{boards.2.column_b}}</a>
                                 {% else %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                <a href="/move/8/"><img src="/static/images/button.png"/></a>
                                 {% endif %}
                             </td>
                             <td>
                                 {% if boards.2.column_c != "-" %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/">{{boards.2.column_c}}</a>
+                                <a href="/move/9/">{{boards.2.column_c}}</a>
                                 {% else %}
-                                <a href="http://127.0.0.1:8000/api_game/{{row}}/"><img src="../static/images/button.png"/></a>
+                                <a href="/move/9/"><img src="/static/images/button.png"/></a>
                                 {% endif %}
                             </td>
                         </tr>
@@ -102,14 +100,62 @@
                 </div>
                 <div class="card-footer text-muted">
                     <form class="form-inline">
-                    <button class="btn btn-success mx-sm-3" type="submit">Continue Game</button>
-                    <button class="btn btn-danger ml-auto mr-4" type="submit">Quit</button>
-                        </form>
+                        <a href="/reset/" class="btn btn-success sm-3">Reset Game</a>
+                        <a href="" class="btn btn-danger ml-auto mr-3">Quit</a>
+                    </form>
                 </div>
             </div>
 
         </div>
         <div class="col-xl">
+
+            {% if boards.0.column_a in "XO"  and boards.0.column_b in "XO"  and boards.0.column_c in "XO" %}
+            <div class="alert alert-success" role="alert">
+                Winner Congratulations!!
+            </div>
+             {% endif %}
+
+            {% if  boards.1.column_a in "XO"  and boards.1.column_b in "XO"  and boards.1.column_c in "XO" %}
+           <div class="alert alert-success" role="alert">
+                Winner Congratulations!!
+            </div>
+             {% endif %}
+
+            {% if  boards.2.column_a in "XO"  and boards.2.column_b in "XO"  and boards.2.column_c in "XO" %}
+           <div class="alert alert-success" role="alert">
+                Winner Congratulations!!
+            </div>
+             {% endif %}
+
+            {% if  boards.0.column_a in "XO"  and boards.1.column_a in "XO"  and boards.2.column_a in "XO" %}
+           <div class="alert alert-success" role="alert">
+                Winner Congratulations!!
+            </div>
+             {% endif %}
+
+            {% if  boards.0.column_b in "XO"  and boards.1.column_b in "XO"  and boards.2.column_b in "XO" %}
+           <div class="alert alert-success" role="alert">
+                Winner Congratulations!!
+            </div>
+             {% endif %}
+
+            {% if  boards.0.column_c in "XO"  and boards.1.column_c in "XO"  and boards.2.column_c in "XO" %}
+           <div class="alert alert-success" role="alert">
+                Winner Congratulations!!
+            </div>
+            {% endif %}
+
+            {% if  boards.0.column_a in "XO"  and boards.1.column_b in "XO"  and boards.2.column_c in "XO" %}
+           <div class="alert alert-success" role="alert">
+                Winner Congratulations!!
+            </div>
+            {% endif %}
+
+             {% if  boards.0.column_c in "XO"  and boards.1.column_b in "XO"  and boards.2.column_a in "XO" %}
+           <div class="alert alert-success" role="alert">
+                Winner Congratulations!!
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
