@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav id="sidebar">
+    <ul class="list-unstyled components">
+        <br>
+        <br>
+        <br>
+        <li>
+            <div class="col-xl-1">
+            </div>
+            <div class="col-xl-4">
+            <div class="card text-center">
+                <img src="/static/images/inicio.png" class="card-img-top ">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make</p>
+                    <a class="btn btn-primary btn-lg" id="sidebarCollapse" data-toggle="collapse"
+                       data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Start
+                        Game</a>
+                </div>
+            </div>
+                </div>
+        </li>
+        <br>
+    </ul>
+</nav>
+<script>
+  $(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
+});
+
+
+</script>
+{% endblock %}

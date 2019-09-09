@@ -1,3 +1,30 @@
+#sidebar {
+    background:  -webkit-linear-gradient(left, #68EACC 0%, #497BE8 100%);
+    transition: all 1.5s;
+}
+
+.wrapper {
+    display: flex;
+	justify-content:center;
+}
+
+
+#sidebar {
+    min-width: 100%;
+    max-width: 50%;
+    min-height: 100vh;
+	
+}
+
+#sidebar.active {
+    margin-left: -100%;
+
+}
+
+.card img{
+    width: 40%;
+}
+
 table {
 	 width: 100%;
 }
@@ -9,7 +36,8 @@ td,th {
 	width: 25%;
 }
 
-img {
-	width: 50%;
+.td img {
+	width: 60%;
 	margin-right: 0%;
 }
+

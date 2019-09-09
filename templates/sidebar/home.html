@@ -1,0 +1,141 @@
+{% extends 'sidebar/sidebar.html' %}
+
+{% block content2 %}
+
+<div class="collapse multi-collapse" id="multiCollapseExample2">
+    <br>
+<br>
+    <div class="container">
+            <div class="card card-body">
+                 <div class="row">
+                <div class="col-xl">
+                </div>
+                <div class="col-xl-3">
+                    {% if players == "O" %}
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend ">
+                            <span class="input-group-text text-black bg-warning">Turn User: </span>
+                        </div>
+                        <input type="text" class="form-control text-center" value="{{players}} (Circle)" disabled>
+                    </div>
+                    {% else %}
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend ">
+                            <span class="input-group-text text-black bg-warning">Turn User: </span>
+                        </div>
+                        <input type="text" class="form-control text-center" value="{{players}} (Cruce)" disabled>
+                    </div>
+                    {% endif %}
+                    <br>
+                </div>
+                <div class="col-xl-5">
+                    <div class="card text-center">
+                        <div class="card-header text-white bg-secondary mb-3">
+                            <h3>Tic Tac Toe</h3>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Touch to Start</h5>
+                            <br>
+                            <br>
+                            <table>
+                                <thead>
+                                <tr>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+
+                                    <td>
+                                        {% if boards.0.column_a != "-" %}
+                                        <a href="/move/1/">{{boards.0.column_a}}</a>
+                                        {% else %}
+                                        <a href="/move/1/"><img src="/static/images/button.png"/></a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if boards.0.column_b != "-" %}
+                                        <a href="/move/2/">{{boards.0.column_b}}</a>
+                                        {% else %}
+                                        <a href="/move/2/"><img src="/static/images/button.png"/></a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if boards.0.column_c != "-" %}
+                                        <a href="/move/3/">{{boards.0.column_c}}</a>
+                                        {% else %}
+                                        <a href="/move/3/"><img src="/static/images/button.png"/></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {% if boards.1.column_a != "-" %}
+                                        <a href="/move/4/">{{boards.1.column_a}}</a>
+                                        {% else %}
+                                        <a href="/move/4/"><img src="/static/images/button.png"/></a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if boards.1.column_b != "-" %}
+                                        <a href="/move/5/">{{boards.1.column_b}}</a>
+                                        {% else %}
+                                        <a href="/move/5/"><img src="/static/images/button.png"/></a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if boards.1.column_c != "-" %}
+                                        <a href="/move/6/">{{boards.1.column_c}}</a>
+                                        {% else %}
+                                        <a href="/move/6/"><img src="/static/images/button.png"/></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {% if boards.2.column_a != "-" %}
+                                        <a href="/move/7/">{{boards.2.column_a}}</a>
+                                        {% else %}
+                                        <a href="/move/7/"><img src="/static/images/button.png"/></a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if boards.2.column_b != "-" %}
+                                        <a href="/move/8/">{{boards.2.column_b}}</a>
+                                        {% else %}
+                                        <a href="/move/8/"><img src="/static/images/button.png"/></a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if boards.2.column_c != "-" %}
+                                        <a href="/move/9/">{{boards.2.column_c}}</a>
+                                        {% else %}
+                                        <a href="/move/9/"><img src="/static/images/button.png"/></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+
+                            <br>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <form class="form-inline">
+                                <a href="/reset/" class="btn btn-success sm-3">Reset Game</a>
+                                <a href="/home/" class="btn btn-danger ml-auto mr-3">Quit</a>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xl">
+                    {{error}}
+                </div>
+                <div class="col-xl">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
