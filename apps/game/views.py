@@ -6,38 +6,45 @@ import requests
 
 # Create your views here.
 class AboutView(ListView):
-    template_name = 'sidebar/home.html'
-    model = Board
-    context_object_name = 'boards'
+    template_name = 'home/home.html'
+    model = Player
 
     def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        u = Player.objects.get(turn="True")
-        context['players'] = u.users
         return context
 
+def getuserturn(request):
+    url2 = "http://127.0.0.1:8000/api_game/"
+    resp2 = requests.get(url=url2)
+    users = resp2.json()
+    user_turn = [u for u in users if str(u['turn']) == 'True']
+    if user_turn != []:
+        users = user_turn[0]['users']
+    else:
+        users = 'Error find user turn'
+
+    return users
 
 
 def getlist(request):
     template_name = 'board/board.html'
     url = "http://127.0.0.1:8000/api_game/list/"
-    url2 = "http://127.0.0.1:8000/api_game/"
     resp1 = requests.get(url=url)
-    board_list = {}
+    user_turn = getuserturn(request)
     if resp1.status_code == 200:
         position = resp1.json()
         if position != []:
-            resp2 = requests.get(url=url2)
-            users = resp2.json()
-            user_turn = [u for u in users if str(u['turn']) == 'True']
-            if user_turn != []:
-                u = user_turn[0]['users']
-                board_list = {'boards':position,'players':u}
+            result = validationwin(request)
+            if result == '':
+                board_list = {'boards': position, 'players': user_turn}
             else:
-                board_list ={'error':'Error find position'}
+                board_list = {'boards': position, 'players': user_turn, 'result': result}
+                reset(request)
 
-    return render(request, template_name,board_list)
+        else:
+            board_list = {'error': 'Error charge board'}
+
+        return render(request, template_name,board_list)
 
 
 def positions(request,rows,column,u):
@@ -89,3 +96,40 @@ def move(request,mov):
             changeturn(request, mov[0], "True")
 
     return HttpResponseRedirect('/board/')
+
+def validationwin(request):
+    url = "http://127.0.0.1:8000/api_game/list/"
+    response = requests.get(url=url)
+    valor = response.json()
+    param = []
+    context_data = ''
+    for row in range(len(valor)):
+        param.append(list(valor[row].values())[1:])
+
+    if (param[0][0] == param[1][0] == param[2][0]) and param[0][0] != '-':
+        context_data =  'Winner:  '+ str(param[1][0])
+
+    elif (param[0][1] == param[1][1] == param[2][1]) and param[0][1] != '-':
+        context_data = 'Winner:  '+ str(param[1][1])
+
+    elif (param[0][2] == param[1][2] == param[2][2]) and param[0][2] != '-':
+        context_data = 'Winner:  ' + str(param[1][2])
+
+    elif (param[0][0] == param[0][1] == param[0][2]) and param[0][0] != '-':
+        context_data = 'Winner:  ' + str(param[0][1])
+
+    elif (param[1][0] == param[1][1] == param[1][2]) and param[1][0] != '-':
+        context_data = 'Winner:  ' + str(param[1][1])
+
+    elif (param[2][0] == param[2][1] == param[2][2]) and param[2][0] != '-':
+        context_data = 'Winner:  ' + str(param[2][1])
+
+    elif (param[0][2] == param[1][1] == param[2][0]) and param[1][1] != '-':
+        context_data = 'Winner:  ' + str(param[1][1])
+
+    elif (param[0][0] == param[1][1] == param[2][2]) and param[1][1] != '-':
+        context_data = 'Winner:  ' + str(param[1][1])
+    #elif  [x for x in param[0] != '-']:
+     #   pass
+
+    return  context_data

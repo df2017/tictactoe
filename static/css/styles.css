@@ -1,43 +1,26 @@
-#sidebar {
-    background:  -webkit-linear-gradient(left, #68EACC 0%, #497BE8 100%);
-    transition: all 1.5s;
-}
-
-.wrapper {
-    display: flex;
-	justify-content:center;
-}
-
-
-#sidebar {
-    min-width: 100%;
-    max-width: 50%;
-    min-height: 100vh;
+body {
 	
-}
-
-#sidebar.active {
-    margin-left: -100%;
-
-}
-
-.card img{
-    width: 40%;
+	background: url(/static/images/background.jpg);
+	min-height: 100vh;
 }
 
 table {
-	 width: 100%;
+   width: 100%;
+   
+}
+th, td {
+   width: 30%;
+   vertical-align: top;
+	padding: 2%;
+	caption-side: bottom;
+}
+td .a{
+width: 30%;
+vertical-align: top;
+padding: 2%;
 }
 
-td,th {
-	text-align: center;
-	font-size:50px;
-	font-family:Helvetica;
-	width: 25%;
-}
-
-.td img {
+img {
 	width: 60%;
-	margin-right: 0%;
 }
 

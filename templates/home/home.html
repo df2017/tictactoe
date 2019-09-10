@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" xmlns="http://www.w3.org/1999/html">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-xl">
+        </div>
+        <div class="col-xl-5">
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+
+                    <a class="btn btn-lg btn-dark text-white" type="button" data-toggle="collapse"
+                       data-target="#collapse" aria-expanded="false" aria-controls="collapseTwo">
+                        Game TIC TAC TOE
+                    </a>
+
+                    <div id="collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="card text-center">
+                                <form action="/board/" method="post">
+                                    {% csrf_token %}
+
+                                    <div class="card-body">
+                                        <h5 class="card-title">Options</h5>
+                                        <br>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text bg-primary text-white" for="inputGroupSelect01">Choose
+                                                    your player</label>
+                                            </div>
+                                            <select class="custom-select" id="inputGroupSelect01" required>
+                                                <option></option>
+                                                <option>{{object_list.0.users}} - (Circle)</option>
+                                                <option>{{object_list.1.users}} - (Cross)</option>
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text bg-warning text-white" for="inputGroupSelect02">Choose
+                                                    mode game</label>
+                                            </div>
+                                            <select class="custom-select" id="inputGroupSelect02" required>
+                                                <option></option>
+                                                <option>Human to Human</option>
+                                                <option>Human to Computer</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        <button class="btn btn-bock btn-danger" type="submit">
+                                            Start Game
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-xl">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
