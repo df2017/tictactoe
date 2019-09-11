@@ -1,0 +1,26 @@
+body {
+	
+	background: url(/static/images/background.jpg);
+	min-height: 100vh;
+}
+
+table {
+   width: 100%;
+   
+}
+th, td {
+   width: 30%;
+   vertical-align: top;
+	padding: 2%;
+	caption-side: bottom;
+}
+td .a{
+width: 30%;
+vertical-align: top;
+padding: 2%;
+}
+
+img {
+	width: 60%;
+}
+

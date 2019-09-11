@@ -134,9 +134,6 @@ def validationwin(request):
     elif (param[0][0] == param[1][1] == param[2][2]) and param[1][1] != '-':
         context_data = 'Winner:  ' + str(param[1][1])
     elif  val1 != True and val2 != True and  val3 != True:
-        print(val1,val2,val3)
         context_data = 'Tie'
 
-    print(val1)
-    print(param[0])
     return  context_data
