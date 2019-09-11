@@ -13,6 +13,16 @@ class AboutView(ListView):
         context = super().get_context_data(**kwargs)
         return context
 
+def index(request):
+    template_name = 'board/board.html'
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
+
+    context = {
+        'num_visits': num_visits,
+    }
+    return render(request, template_name, context=context)
+
 def getuserturn(request):
     url2 = "http://tictactoegameapp.herokuapp.com/api_game/"
     resp2 = requests.get(url=url2)
