@@ -14,7 +14,7 @@ class AboutView(ListView):
         return context
 
 def getuserturn(request):
-    url2 = "http://127.0.0.1:8000/api_game/"
+    url2 = "http://tictactoegameapp.herokuapp.com/api_game/"
     resp2 = requests.get(url=url2)
     users = resp2.json()
     user_turn = [u for u in users if str(u['turn']) == 'True']
@@ -28,7 +28,7 @@ def getuserturn(request):
 
 def getlist(request):
     template_name = 'board/board.html'
-    url = "http://127.0.0.1:8000/api_game/list/"
+    url = "http://tictactoegameapp.herokuapp.com/api_game/list/"
     resp1 = requests.get(url=url)
     user_turn = getuserturn(request)
     if resp1.status_code == 200:
