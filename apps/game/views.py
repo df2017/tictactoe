@@ -14,14 +14,10 @@ class AboutView(ListView):
         return context
 
 def index(request):
-    template_name = 'board/board.html'
     num_visits = request.session.get('num_visits', 0)
     request.session['num_visits'] = num_visits + 1
-
-    context = {
-        'num_visits': num_visits,
-    }
-    return render(request, template_name, context=context)
+    context =  num_visits
+    return context
 
 def getuserturn(request):
     url2 = "http://tictactoegameapp.herokuapp.com/api_game/"
@@ -41,12 +37,13 @@ def getlist(request):
     url = "http://tictactoegameapp.herokuapp.com/api_game/list/"
     resp1 = requests.get(url=url)
     user_turn = getuserturn(request)
+    visit = index(request)
     if resp1.status_code == 200:
         position = resp1.json()
         if position != []:
             result = validationwin(request)
             if result == '':
-                board_list = {'boards': position, 'players': user_turn}
+                board_list = {'boards': position, 'players': user_turn, 'num_visits':visit}
             else:
                 board_list = {'boards': position, 'players': user_turn, 'result': result}
                 reset(request)
