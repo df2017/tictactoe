@@ -103,9 +103,13 @@ def validationwin(request):
     valor = response.json()
     param = []
     context_data = ''
+
     for row in range(len(valor)):
         param.append(list(valor[row].values())[1:])
 
+    val1 = ('-' in param[0])
+    val2 = ('-' in param[1])
+    val3 = ('-' in param[2])
     if (param[0][0] == param[1][0] == param[2][0]) and param[0][0] != '-':
         context_data =  'Winner:  '+ str(param[1][0])
 
@@ -129,7 +133,10 @@ def validationwin(request):
 
     elif (param[0][0] == param[1][1] == param[2][2]) and param[1][1] != '-':
         context_data = 'Winner:  ' + str(param[1][1])
-    #elif  [x for x in param[0] != '-']:
-     #   pass
+    elif  val1 != True and val2 != True and  val3 != True:
+        print(val1,val2,val3)
+        context_data = 'Tie'
 
+    print(val1)
+    print(param[0])
     return  context_data
