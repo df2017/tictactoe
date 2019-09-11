@@ -49,7 +49,7 @@ def getlist(request):
 
 def positions(request,rows,column,u):
     template_name = 'board/board.html'
-    url = "http://127.0.0.1:8000/api_game/position/%s/"
+    url = "http://tictactoegameapp.herokuapp.com/api_game/position/%s/"
     dict = {"position1": int(rows), "fields": {column: ""}}
     param = dict.get("fields")
     param[column] = str(u)
@@ -70,7 +70,7 @@ def reset(request):
     return HttpResponseRedirect('/board/')
 
 def changeturn(request, id,valor):
-    url = "http://127.0.0.1:8000/api_game/%s/"%id
+    url = "http://tictactoegameapp.herokuapp.com/api_game/%s/"%id
     param = {"turn": valor}
     response = requests.put(url=url, data=param)
     if response.status_code == '200':
@@ -81,7 +81,7 @@ def changeturn(request, id,valor):
         return HttpResponseRedirect('/board/', error)
 
 def move(request,mov):
-    url = "http://127.0.0.1:8000/api_game/move/%s/"%mov
+    url = "http://tictactoegameapp.herokuapp.com//api_game/move/%s/"%mov
     r = requests.get(url=url)
     position = r.json()
     players = Player.objects.all()
@@ -98,7 +98,7 @@ def move(request,mov):
     return HttpResponseRedirect('/board/')
 
 def validationwin(request):
-    url = "http://127.0.0.1:8000/api_game/list/"
+    url = "http://tictactoegameapp.herokuapp.com/api_game/list/"
     response = requests.get(url=url)
     valor = response.json()
     param = []
