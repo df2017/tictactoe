@@ -6,7 +6,7 @@ from .apiview import BoardApiUpdate,BoardList,BoardDetail, MoveDetail, PlayerLis
 
 
 urlpatterns = [
-    path('/', AboutView.as_view(), name='home'),
+    path('home/', AboutView.as_view(), name='home'),
     path('board/', getlist, name='board'),
     path('move/<int:mov>/', move, name='move'),
     path('reset/', reset, name='reset'),
