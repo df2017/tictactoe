@@ -81,7 +81,7 @@ def changeturn(request, id,valor):
         return HttpResponseRedirect('/board/', error)
 
 def move(request,mov):
-    url = "http://tictactoegameapp.herokuapp.com//api_game/move/%s/"%mov
+    url = "http://tictactoegameapp.herokuapp.com/api_game/move/%s/"%mov
     r = requests.get(url=url)
     position = r.json()
     players = Player.objects.all()
