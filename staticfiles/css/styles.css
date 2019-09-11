@@ -1,6 +1,6 @@
 body {
 	
-	background: url(/static/images/background.jpg);
+	background: url(/static/images/background.jpg) no-repeat;
 	min-height: 100vh;
 }
 
