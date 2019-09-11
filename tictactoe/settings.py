@@ -68,6 +68,8 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
+SESSION_SAVE_EVERY_REQUEST = True
+
 ROOT_URLCONF = 'tictactoe.urls'
 
 TEMPLATES = [
