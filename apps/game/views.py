@@ -52,7 +52,7 @@ def getlist(request):
         else:
             board_list = {'error': 'Error charge board'}
 
-        return render_to_response(template_name, board_list,context_instance=RequestContext(request))
+        return render_to_response(template_name, board_list, RequestContext(request))
 
 
 def positions(request,rows,column,u):
