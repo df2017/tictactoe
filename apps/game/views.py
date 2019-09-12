@@ -2,6 +2,7 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView
 from .models import Player, Board, Move
+from django.template import RequestContext
 import requests
 
 # Create your views here.
@@ -51,7 +52,7 @@ def getlist(request):
         else:
             board_list = {'error': 'Error charge board'}
 
-        return render(request, template_name,board_list)
+        return render_to_response(template_name, board_list,context_instance=RequestContext(request))
 
 
 def positions(request,rows,column,u):
