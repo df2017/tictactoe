@@ -34,3 +34,5 @@ img {
     display: block;
   }
 }
+
+@media (min-width: 576px) { ... }
