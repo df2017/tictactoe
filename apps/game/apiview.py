@@ -5,7 +5,6 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from .models import Board, Move, Player
 
-
 class PlayerList(APIView):
     def get(self, request):
         list = Player.objects.all()[:2]
@@ -25,12 +24,21 @@ class PlayerApiUpdate(APIView):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class BoardList(APIView):
+
     def get(self, request):
-        list = Board.objects.all()[:3]
+        list = Board.objects.all()
         data = BoardSerializer(list, many=True).data
         return Response(data)
 
+    def post(self, request):
+        serializer = BoardSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class BoardDetail(APIView):
+
     def get(self, request, pk):
         detail = get_object_or_404(Board, pk=pk)
         data = BoardSerializer(detail).data
@@ -42,14 +50,19 @@ class MoveDetail(APIView):
         data = MoveSerializer(detail).data
         return Response(data)
 
+class MoveList(APIView):
+    def get(self, request):
+        list = Move.objects.all()
+        param = list.objects.get('position')
+        data = MoveSerializer(param, many=True).data
+        return Response(data)
+
 class BoardApiUpdate(APIView):
 
     def put(self, request, id):
         position = get_object_or_404(Board, pk=id)
-        if request.method == 'PUT':
-            serializer = BoardSerializer(position, data=request.data, partial=True)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(BoardSerializer(position).data)
-            else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer = BoardSerializer(position, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(BoardSerializer(position).data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
