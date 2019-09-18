@@ -6,21 +6,21 @@
         <div class="row">
             <div class="col-xl-3">
                 {% if players == "O" %}
-                <div class="input-group mb-3">
+                <div class="input-group mb-4">
                     <div class="input-group-prepend ">
                         <span class="input-group-text text-black bg-warning">Turn User: </span>
                     </div>
                     <input type="text" class="form-control text-center" value="{{players}} (Circle)" disabled>
                 </div>
                 {% else %}
-                <div class="input-group mb-3">
+                <div class="input-group mb-4">
                     <div class="input-group-prepend ">
                         <span class="input-group-text text-black bg-warning">Turn User: </span>
                     </div>
                     <input type="text" class="form-control text-center" value="{{players}} (Cross)" disabled>
                 </div>
                 {% endif %}
-                 <div class="input-group mb-3">
+                 <div class="input-group mb-4">
                     <div class="input-group-prepend ">
                         <span class="input-group-text text-black bg-primary">Mode Game: </span>
                     </div>
@@ -33,10 +33,10 @@
             <div class="col-xl-6">
                 <div class="card text-center">
                     <div class="card-header text-white bg-secondary mb-3">
-                        <h3>Tic Tac Toe</h3>
+                        <h1>Tic Tac Toe</h1>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">Touch to Start</h5>
+                        <h2 class="card-title">Touch to Start</h2>
                         <br>
                         <br>
                         {% if not result %}
