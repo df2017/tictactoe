@@ -2,183 +2,93 @@
 
 {% block content %}
     <br>
-    <div class="card card-body">
-        <div class="row">
-            <div class="col-xl-3">
-                {% if players == "O" %}
-                <div class="input-group mb-4">
-                    <div class="input-group-prepend ">
-                        <span class="input-group-text text-black bg-warning">Turn User: </span>
-                    </div>
-                    <input type="text" class="form-control text-center" value="{{players}} (Circle)" disabled>
+<div class="card card-body">
+    <div class="row">
+        <div class="col-xl-6">
+            {% if player == "O" %}
+            <div class="input-group input-group-lg">
+                <div class="input-group-prepend ">
+                    <span class="input-group-text text-black bg-warning">Turn User: </span>
                 </div>
-                {% else %}
-                <div class="input-group mb-4">
-                    <div class="input-group-prepend ">
-                        <span class="input-group-text text-black bg-warning">Turn User: </span>
-                    </div>
-                    <input type="text" class="form-control text-center" value="{{players}} (Cross)" disabled>
-                </div>
-                {% endif %}
-                 <div class="input-group mb-4">
-                    <div class="input-group-prepend ">
-                        <span class="input-group-text text-black bg-primary">Mode Game: </span>
-                    </div>
-                    <input type="text" class="form-control text-center" value="Hum_to_Hum" disabled>
-                </div>
-                <br>
-
+                <input type="text" class="form-control text-center" value="{{player}} (Circle)" disabled>
             </div>
-
-            <div class="col-xl-6">
-                <div class="card text-center">
-                    <div class="card-header text-white bg-secondary mb-3">
-                        <h1>Tic Tac Toe</h1>
-                    </div>
-                    <div class="card-body">
-                        <h2 class="card-title">Touch to Start</h2>
-                        <br>
-                        <br>
-                        {% if not result %}
-                        <table>
-
-                            <tbody>
-                            <tr>
-                                <td>
-                                    {% if boards.0.column_a != "-" %}
-                                        {% if boards.0.column_a == "X" %}
-                                        <h1><img src="/static/images/cross2.png"/></h1>
-                                        {% else %}
-                                        <h1><img src="/static/images/circle4.jpg"/></h1>
-                                         {% endif %}
-                                    {% else %}
-                                    <a href="/move/1/"><img src="/static/images/button.png"/></a>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if boards.0.column_b != "-" %}
-                                        {% if boards.0.column_b == "X" %}
-                                        <h1><img src="/static/images/cross2.png"/></h1>
-                                        {% else %}
-                                        <h1><img src="/static/images/circle4.jpg"/></h1>
-                                         {% endif %}
-                                    {% else %}
-                                    <a href="/move/2/"><img src="/static/images/button.png"/></a>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if boards.0.column_c != "-" %}
-                                        {% if  boards.0.column_c == "X" %}
-                                        <h1><img src="/static/images/cross2.png"/></h1>
-                                        {% else %}
-                                        <h1><img src="/static/images/circle4.jpg"/></h1>
-                                         {% endif %}
-                                    {% else %}
-                                    <a href="/move/3/"><img src="/static/images/button.png"/></a>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {% if boards.1.column_a != "-" %}
-                                    {% if  boards.1.column_a == "X" %}
-                                        <h1><img src="/static/images/cross2.png"/></h1>
-                                        {% else %}
-                                        <h1><img src="/static/images/circle4.jpg"/></h1>
-                                         {% endif %}
-                                    {% else %}
-                                    <a href="/move/4/"><img src="/static/images/button.png"/></a>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if boards.1.column_b != "-" %}
-                                        {% if  boards.1.column_b == "X" %}
-                                            <h1><img src="/static/images/cross2.png"/></h1>
-                                        {% else %}
-                                            <h1><img src="/static/images/circle4.jpg"/></h1>
-                                        {% endif %}
-                                    {% else %}
-                                    <a href="/move/5/"><img src="/static/images/button.png"/></a>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if boards.1.column_c != "-" %}
-                                      {% if  boards.1.column_c == "X" %}
-                                            <h1><img src="/static/images/cross2.png"/></h1>
-                                        {% else %}
-                                            <h1><img src="/static/images/circle4.jpg"/></h1>
-                                        {% endif %}
-                                    {% else %}
-                                    <a href="/move/6/"><img src="/static/images/button.png"/></a>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {% if boards.2.column_a != "-" %}
-                                        {% if  boards.2.column_a == "X" %}
-                                            <h1><img src="/static/images/cross2.png"/></h1>
-                                        {% else %}
-                                            <h1><img src="/static/images/circle4.jpg"/></h1>
-                                        {% endif %}
-                                    {% else %}
-                                    <a href="/move/7/"><img src="/static/images/button.png"/></a>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if boards.2.column_b != "-" %}
-                                      {% if  boards.2.column_b == "X" %}
-                                            <h1><img src="/static/images/cross2.png"/></h1>
-                                        {% else %}
-                                            <h1><img src="/static/images/circle4.jpg"/></h1>
-                                        {% endif %}
-                                    {% else %}
-                                    <a href="/move/8/"><img src="/static/images/button.png"/></a>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if boards.2.column_c != "-" %}
-                                        {% if  boards.2.column_c == "X" %}
-                                            <h1><img src="/static/images/cross2.png"/></h1>
-                                        {% else %}
-                                            <h1><img src="/static/images/circle4.jpg"/></h1>
-                                        {% endif %}
-                                    {% else %}
-                                    <a href="/move/9/"><img src="/static/images/button.png"/></a>
-                                    {% endif %}
-                                </td>
-                            </tbody>
-                        </table>
-                        </div>
-                         <div class="card-footer text-muted">
-                        <form class="form-inline">
-                            <a href="/reset/" class="btn btn-success btn-lg btn-block">Reset Game</a>
-                            <br>
-                             <a href="/" class="btn btn-danger btn-lg btn-block">Quit</a>
-                        </form>
-
-                        </div>
-                        {% else %}
-                    </div>
-                    <div class="card-footer text-muted">
-                            <a href="/reset/" class="btn btn-success btn-lg btn-block">Reset Game</a>
-                              <br>
-                        <a href="/" class="btn btn-danger btn-lg  btn-block">Quit</a>
-                    </div>
+            {% else %}
+            <div class="input-group input-group-lg">
+                <div class="input-group-prepend ">
+                    <span class="input-group-text text-black bg-warning">Turn User: </span>
                 </div>
-
-            </div>
-            <br>
-            <div class="col-xl">
-                
-                 <div class="input-group mb-3">
-                    <div class="input-group-prepend ">
-                        <span class="input-group-text text-white bg-danger">Result: </span>
-                    </div>
-                    <input type="text" class="form-control text-center" value="{{result}}" disabled>
-                </div>
+                <input type="text" class="form-control text-center" value="{{player}} (Cross)" disabled>
             </div>
             {% endif %}
+            <br>
+        </div>
+        <div class="col-xl-6">
+            <div class="input-group input-group-lg">
+                <div class="input-group-prepend ">
+                    <span class="input-group-text text-black bg-primary">Mode Game: </span>
+                </div>
+                <input type="text" class="form-control text-center" value="Hum_to_Hum" disabled>
+            </div>
+            <br>
         </div>
     </div>
+    <div class="row">
+        <div class="col-xl">
+            <div class="card text-center">
+                <div class="card-header text-white bg-secondary mb-3">
+                    <h2>Tic Tac Toe</h2>
+                </div>
+                <div class="card-body text-center">
+                    {% if list %}
+                    <h2 class="card-title">Touch to Start</h2>
+                    <br>
+                    {% if not result %}
+                    <table>
+                        <tbody>
+                        <tr class="row">
+                            {% for column in list %}
+                            <td>
+                                {% if column == "X" %}
+                                <h1><img src="/static/images/cross2.png"/></h1>
+                                {% elif column == "O" %}
+                                <h1><img src="/static/images/circle4.jpg"/></h1>
+                                {% else %}
+                                <a href="/move/{{forloop.counter}}"><img src="/static/images/button.png"/></a>
+                                {% endif %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">Result:</h4>
+                        <br>
+                        <p>{{result}}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer text-muted">
+                    <form class="form-inline">
+                        <a href="/reset/" class="btn btn-success btn-lg btn-block sm-3">Reset Game</a>
+                    </form>
+                    {% else %}
+                    <form action="/board/" method="GET">
+                        <button type="submit" class="btn btn-success btn-lg sm-3">Begin Game</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-xl-4">
+        </div>
+        <br>
+        <div class="col-xl-4">
+            <a href="/" class="btn btn-danger btn-lg btn-block">Quit</a>
+        </div>
+    </div>
+</div>
 {% endblock %}
