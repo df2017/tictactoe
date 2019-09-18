@@ -1,40 +1,26 @@
 body {
-	
 	background: url(/static/images/background.jpg);
 	min-height: 100vh;
-        background-repeat: no-repeat; 
+    background-repeat: no-repeat; 
 	background-attachment: fixed;
-    	background-size: cover;
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    height:100%;
 }
 
 table {
    width: 100%;
-   
 }
 th, td {
-   width: 30%;
-   vertical-align: top;
+	width: 30%;
+	vertical-align: middle;
 	padding: 2%;
-	caption-side: bottom;
+	text-align: center;
 }
-td .a{
-width: 30%;
-vertical-align: top;
-padding: 2%;
-}
+
 
 img {
-	width: 60%;
-}
+	width: 50%;
 
-
-.custom-class {
-  display: none;
 }
-@include media-breakpoint-up(sm) {
-  .custom-class {
-    display: block;
-  }
-}
-
-@media (min-width: 576px) { ... }
