@@ -1,88 +1,94 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView
-from .models import Player, Board, Move
-from django.template import RequestContext
+from django.views.generic import TemplateView, View
+from .models import Player, Move
 import requests
 
-# Create your views here.
-class AboutView(ListView):
+
+class AboutView(TemplateView):
     template_name = 'home/home.html'
-    model = Player
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        url = "https://tictactoegameapp.herokuapp.com/api_game/"
+        resp1 = requests.get(url=url)
+        context['players'] = resp1.json()[0:2]
         return context
 
-def getuserturn(request):
-    url2 = "http://tictactoegameapp.herokuapp.com/api_game/"
-    resp2 = requests.get(url=url2)
-    users = resp2.json()
-    user_turn = [u for u in users if str(u['turn']) == 'True']
-    if user_turn != []:
-        users = user_turn[0]['users']
-    else:
-        users = 'Error find user turn'
 
-    return users
-
-
-def getlist(request):
+class BoardView(View):
     template_name = 'board/board.html'
-    url = "http://tictactoegameapp.herokuapp.com/api_game/list/"
-    resp1 = requests.get(url=url)
-    user_turn = getuserturn(request)
-    if resp1.status_code == 200:
-        position = resp1.json()
-        if position != []:
-            result = validationwin(request)
-            if result == '':
-                board_list = {'boards': position, 'players': user_turn}
-            else:
-                board_list = {'boards': position, 'players': user_turn, 'result': result}
-                reset(request)
 
+    def get_object(self):
+        url2 = "https://tictactoegameapp.herokuapp.com/api_game/"
+        resp2 = requests.get(url=url2)
+        users = resp2.json()
+        user_turn = [u for u in users if str(u['turn']) == 'True']
+        if user_turn != []:
+            users = user_turn[0]['users']
         else:
-            board_list = {'error': 'Error charge board'}
+            users = 'Error find user turn'
+        return users
 
-        return render_to_response(template_name, board_list, RequestContext(request))
+    def post(self, request):
+        url = "https://tictactoegameapp.herokuapp.com/api_game/list/"
+        response = requests.post(url=url)
+        if response.status_code == 201:
+            game = response.json()['id']
+            request.session['game'] = game
+            return render(request, self.template_name, {'player': self.get_object()})
+        else:
+            return HttpResponseRedirect('/')
+
+    def get(self, request):
+        url = "https://tictactoegameapp.herokuapp.com/api_game/list/%s/" % request.session['game']
+        response = requests.get(url=url)
+        result = validationwin(request)
+        if response.status_code == 200:
+            data = response.json()
+            list = [str(data[str(row)]) for row in data if row != 'id'][0:9]
+            return render(request, self.template_name, {'list': list, 'player': self.get_object(), 'result': result})
+        else:
+            return HttpResponseRedirect('/')
 
 
-def positions(request,rows,column,u):
+def positions(request, column, u, p):
+    # search position and update board #
     template_name = 'board/board.html'
-    url = "http://tictactoegameapp.herokuapp.com/api_game/position/%s/"
-    dict = {"position1": int(rows), "fields": {column: ""}}
-    param = dict.get("fields")
-    param[column] = str(u)
-    response = requests.put(url=(url % str(dict['position1'])), data=param)
+    url = "https://tictactoegameapp.herokuapp.com/api_game/position/%s/" % p
+    param = {column: u}
+    response = requests.put(url=url, data=param)
     if response.status_code == '200':
         pass
     else:
         board_list = {'error': 'Error find position'}
         return render(request, template_name, board_list)
 
+
 def reset(request):
+    # reset board #
     valor = Move.objects.all()
-
     for rows in valor:
-        upd = str(rows).split(',')
-        positions(request, upd[0], upd[1], '-')
-
+        positions(request, rows, "-", request.session['game'])
     return HttpResponseRedirect('/board/')
 
-def changeturn(request, id,valor):
-    url = "http://tictactoegameapp.herokuapp.com/api_game/%s/"%id
+
+def changeturn(id, valor):
+    # change turn #
+    url = "https://tictactoegameapp.herokuapp.com/api_game/%s/" % id
     param = {"turn": valor}
     response = requests.put(url=url, data=param)
     if response.status_code == '200':
         error = {'error_code': response.status_code}
         return render_to_response('board/board.html', error)
     else:
-        error = {'error_code':response.status_code}
+        error = {'error_code': response.status_code}
         return HttpResponseRedirect('/board/', error)
 
-def move(request,mov):
-    url = "http://tictactoegameapp.herokuapp.com/api_game/move/%s/"%mov
+
+def move(request, mov):
+    # update position in board #
+    url = "https://tictactoegameapp.herokuapp.com/api_game/move/%s/" % mov
     r = requests.get(url=url)
     position = r.json()
     players = Player.objects.all()
@@ -90,51 +96,53 @@ def move(request,mov):
         mov = str(turn).split(',')
         if mov[2].strip() == 'True':
             board_list = position['position']
-            valor = board_list.split(',')
-            positions(request, valor[0], valor[1], mov[1].strip())
-            changeturn(request, mov[0],"False")
+            positions(request, board_list, mov[1].strip(), request.session['game'])
+            changeturn(mov[0], "False")
         else:
-            changeturn(request, mov[0], "True")
+            changeturn(mov[0], "True")
 
     return HttpResponseRedirect('/board/')
 
+
 def validationwin(request):
-    url = "http://tictactoegameapp.herokuapp.com/api_game/list/"
+    # function validate winner or tie #
+    url = "https://tictactoegameapp.herokuapp.com/api_game/list/%s/" % request.session['game']
     response = requests.get(url=url)
     valor = response.json()
     param = []
     context_data = ''
 
-    for row in range(len(valor)):
-        param.append(list(valor[row].values())[1:])
+    for row in valor:
+        if row != 'id':
+            param.append(valor[row])
+        if row.strip() == 'column_9':
+            break
+    val1 = ('-' in param)
+    val2 = (None in param)
+    if (param[0] == param[1] == param[2]) and param[0] != '-' and param[0] != None:
+        context_data = 'Winner:  ' + str(param[1])
 
-    val1 = ('-' in param[0])
-    val2 = ('-' in param[1])
-    val3 = ('-' in param[2])
-    if (param[0][0] == param[1][0] == param[2][0]) and param[0][0] != '-':
-        context_data =  'Winner:  '+ str(param[1][0])
+    elif (param[3] == param[4] == param[5]) and param[3] != '-' and param[3] != None:
+        context_data = 'Winner:  ' + str(param[4])
 
-    elif (param[0][1] == param[1][1] == param[2][1]) and param[0][1] != '-':
-        context_data = 'Winner:  '+ str(param[1][1])
+    elif (param[6] == param[7] == param[8]) and param[6] != '-' and param[6] != None:
+        context_data = 'Winner:  ' + str(param[7])
 
-    elif (param[0][2] == param[1][2] == param[2][2]) and param[0][2] != '-':
-        context_data = 'Winner:  ' + str(param[1][2])
+    elif (param[0] == param[3] == param[6]) and param[0] != '-' and param[0] != None:
+        context_data = 'Winner:  ' + str(param[3])
 
-    elif (param[0][0] == param[0][1] == param[0][2]) and param[0][0] != '-':
-        context_data = 'Winner:  ' + str(param[0][1])
+    elif (param[1] == param[4] == param[7]) and param[1] != '-' and param[1] != None:
+        context_data = 'Winner:  ' + str(param[4])
 
-    elif (param[1][0] == param[1][1] == param[1][2]) and param[1][0] != '-':
-        context_data = 'Winner:  ' + str(param[1][1])
+    elif (param[2] == param[5] == param[8]) and param[2] != '-' and param[2] != None:
+        context_data = 'Winner:  ' + str(param[5])
 
-    elif (param[2][0] == param[2][1] == param[2][2]) and param[2][0] != '-':
-        context_data = 'Winner:  ' + str(param[2][1])
+    elif (param[2] == param[4] == param[6]) and param[4] != '-' and param[4] != None:
+        context_data = 'Winner:  ' + str(param[4])
 
-    elif (param[0][2] == param[1][1] == param[2][0]) and param[1][1] != '-':
-        context_data = 'Winner:  ' + str(param[1][1])
-
-    elif (param[0][0] == param[1][1] == param[2][2]) and param[1][1] != '-':
-        context_data = 'Winner:  ' + str(param[1][1])
-    elif  val1 != True and val2 != True and  val3 != True:
+    elif (param[0] == param[4] == param[8]) and param[4] != '-' and param[4] != None:
+        context_data = 'Winner:  ' + str(param[4])
+    elif val1 != True and val2 != True:
         context_data = 'Tie'
 
-    return  context_data
+    return context_data
