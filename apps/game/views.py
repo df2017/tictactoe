@@ -33,7 +33,6 @@ class BoardView(View):
         response = requests.get(url=urlboard)
         response2 = requests.get(url=urluser)
         user_turn = response2.json()
-        print(user_turn['turn'])
         result = validationwin(request)
         if response.status_code == 200:
             data = response.json()
@@ -86,7 +85,6 @@ def move(request, mov):
     position = r.json()
     players = r2.json()
     u = players['users'].split(',')
-    print(mov)
     for turn in u:
         if turn in (players['turn'],'None'):
             column = position['position']
