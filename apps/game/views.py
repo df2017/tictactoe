@@ -79,7 +79,7 @@ def changeturn(id, valor):
 
 def move(request, mov):
     # update position in board #
-    url = "https://tictactoegameapp.herokuapp.com/move/%s/" % mov
+    url = "https://tictactoegameapp.herokuapp.com/api_game/move/%s/" % mov
     url2 = "https://tictactoegameapp.herokuapp.com/api_game/player/%s/" % request.session['game'][1]
     r = requests.get(url=url)
     r2 = requests.get(url=url2)
