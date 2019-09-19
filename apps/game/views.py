@@ -57,6 +57,7 @@ def positions(request, column, u, p):
 
 def reset(request):
     # reset board #
+    url = "https://tictactoegameapp.herokuapp.com/api_game/move/"
     r = requests.get(url=url)
     valor = r.json()
     for rows in valor:
