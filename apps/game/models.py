@@ -3,14 +3,9 @@ from django.contrib import admin
 
 class Player(models.Model):
 
-    user_choices = (
-        ('X', 'Cross'),
-        ('O', 'Circle'),
-    )
-
     id = models.AutoField(primary_key=True)
-    users = models.CharField(max_length=1, null=True, choices=user_choices)
-    turn = models.BooleanField(default=False)
+    users = models.CharField(max_length=20, null=True, default='X,O')
+    turn = models.CharField(max_length=1, null=True, blank=True)
     win = models.IntegerField(null=True)
     crt_date = models.DateTimeField(auto_now=True)
 
@@ -35,20 +30,13 @@ class Board(models.Model):
     column_7 = models.CharField(max_length=1, null=True, blank=True)
     column_8 = models.CharField(max_length=1, null=True, blank=True)
     column_9 = models.CharField(max_length=1, null=True, blank=True)
-    column_10 = models.CharField(max_length=1, null=True, blank=True)
-    column_11 = models.CharField(max_length=1, null=True, blank=True)
-    column_12 = models.CharField(max_length=1, null=True, blank=True)
-    column_13 = models.CharField(max_length=1, null=True, blank=True)
-    column_14 = models.CharField(max_length=1, null=True, blank=True)
-    column_15 = models.CharField(max_length=1, null=True, blank=True)
-    column_16 = models.CharField(max_length=1, null=True, blank=True)
 
     objects = models.Manager()
 
 
     def __str__(self):
         list_display = ['id']
-        for i in range(17):
+        for i in range(10):
             if i != 0:
                 list_display.append('column_' + str(i))
 
@@ -57,7 +45,7 @@ class Board(models.Model):
 
 class BoardAdmin(admin.ModelAdmin):
     list_display = ['id']
-    for i in range(17):
+    for i in range(10):
         if i != 0:
             list_display.append('column_' + str(i))
 
