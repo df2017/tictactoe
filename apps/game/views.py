@@ -57,9 +57,10 @@ def positions(request, column, u, p):
 
 def reset(request):
     # reset board #
-    valor = Move.objects.all()
+    r = requests.get(url=url)
+    valor = r.json()
     for rows in valor:
-        positions(request, rows, "-", request.session['game'])
+        positions(request, rows['position'], "-", request.session['game'][0])
     return HttpResponseRedirect('/board/')
 
 
