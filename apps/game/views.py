@@ -1,53 +1,44 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, View
-from .models import Player, Move
-import requests
+from .models import Move
+import requests, random
 
 
 class AboutView(TemplateView):
     template_name = 'home/home.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        url = "https://tictactoegameapp.herokuapp.com/api_game/"
-        resp1 = requests.get(url=url)
-        context['players'] = resp1.json()[0:2]
-        return context
-
-
 class BoardView(View):
     template_name = 'board/board.html'
-
-    def get_object(self):
-        url2 = "https://tictactoegameapp.herokuapp.com/api_game/"
-        resp2 = requests.get(url=url2)
-        users = resp2.json()
-        user_turn = [u for u in users if str(u['turn']) == 'True']
-        if user_turn != []:
-            users = user_turn[0]['users']
-        else:
-            users = 'Error find user turn'
-        return users
+    url1 = "https://tictactoegameapp.herokuapp.com/api_game/player/"
+    url2 = "https://tictactoegameapp.herokuapp.com/api_game/list/"
+    url3 =  "https://tictactoegameapp.herokuapp.com/api_game/list/%s/"
+    url4 = "https://tictactoegameapp.herokuapp.com/api_game/player/%s/"
 
     def post(self, request):
-        url = "https://tictactoegameapp.herokuapp.com/api_game/list/"
-        response = requests.post(url=url)
-        if response.status_code == 201:
-            game = response.json()['id']
-            request.session['game'] = game
-            return render(request, self.template_name, {'player': self.get_object()})
+        turn = random.choice('XO')
+        response1 = requests.post(url=self.url1,data={"turn":str(turn)})
+        response2 = requests.post(url=self.url2)
+        if response1.status_code == 201 and response2.status_code == 201:
+            users = response1.json()
+            game = response2.json()['id']
+            request.session['game'] = [game,users['id']]
+            return render(request, self.template_name, {'player': users['turn']})
         else:
             return HttpResponseRedirect('/')
 
     def get(self, request):
-        url = "https://tictactoegameapp.herokuapp.com/api_game/list/%s/" % request.session['game']
-        response = requests.get(url=url)
+        urlboard = self.url3 % request.session['game'][0]
+        urluser = self.url4 % request.session['game'][1]
+        response = requests.get(url=urlboard)
+        response2 = requests.get(url=urluser)
+        user_turn = response2.json()
+        print(user_turn['turn'])
         result = validationwin(request)
         if response.status_code == 200:
             data = response.json()
             list = [str(data[str(row)]) for row in data if row != 'id'][0:9]
-            return render(request, self.template_name, {'list': list, 'player': self.get_object(), 'result': result})
+            return render(request, self.template_name, {'list': list, 'player': user_turn['turn'], 'result': result})
         else:
             return HttpResponseRedirect('/')
 
@@ -75,8 +66,8 @@ def reset(request):
 
 def changeturn(id, valor):
     # change turn #
-    url = "https://tictactoegameapp.herokuapp.com/api_game/%s/" % id
-    param = {"turn": valor}
+    url = "https://tictactoegameapp.herokuapp.com/api_game/player/%s/" % id
+    param = {"turn":valor}
     response = requests.put(url=url, data=param)
     if response.status_code == '200':
         error = {'error_code': response.status_code}
@@ -89,24 +80,27 @@ def changeturn(id, valor):
 def move(request, mov):
     # update position in board #
     url = "https://tictactoegameapp.herokuapp.com/api_game/move/%s/" % mov
+    url2 = "https://tictactoegameapp.herokuapp.com/player/%s/" % request.session['game'][1]
     r = requests.get(url=url)
+    r2 = requests.get(url=url2)
     position = r.json()
-    players = Player.objects.all()
-    for turn in players:
-        mov = str(turn).split(',')
-        if mov[2].strip() == 'True':
+    players = r2.json()
+    u = players['users'].split(',')
+    for turn in u:
+        print(players['turn'])
+        if turn in (players['turn'],'None'):
+
             board_list = position['position']
-            positions(request, board_list, mov[1].strip(), request.session['game'])
-            changeturn(mov[0], "False")
+            positions(request, board_list, turn, request.session['game'][0])
         else:
-            changeturn(mov[0], "True")
+            changeturn(request.session['game'][1], turn)
 
     return HttpResponseRedirect('/board/')
 
 
 def validationwin(request):
     # function validate winner or tie #
-    url = "https://tictactoegameapp.herokuapp.com/api_game/list/%s/" % request.session['game']
+    url = "https://tictactoegameapp.herokuapp.com/api_game/list/%s/" % request.session['game'][0]
     response = requests.get(url=url)
     valor = response.json()
     param = []
@@ -115,8 +109,7 @@ def validationwin(request):
     for row in valor:
         if row != 'id':
             param.append(valor[row])
-        if row.strip() == 'column_9':
-            break
+
     val1 = ('-' in param)
     val2 = (None in param)
     if (param[0] == param[1] == param[2]) and param[0] != '-' and param[0] != None:
@@ -146,3 +139,4 @@ def validationwin(request):
         context_data = 'Tie'
 
     return context_data
+
