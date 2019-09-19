@@ -79,19 +79,18 @@ def changeturn(id, valor):
 
 def move(request, mov):
     # update position in board #
-    url = "https://tictactoegameapp.herokuapp.com/api_game/move/%s/" % mov
-    url2 = "https://tictactoegameapp.herokuapp.com/player/%s/" % request.session['game'][1]
+    url = "https://tictactoegameapp.herokuapp.com/move/%s/" % mov
+    url2 = "https://tictactoegameapp.herokuapp.com/api_game/player/%s/" % request.session['game'][1]
     r = requests.get(url=url)
     r2 = requests.get(url=url2)
     position = r.json()
     players = r2.json()
     u = players['users'].split(',')
+    print(mov)
     for turn in u:
-        print(players['turn'])
         if turn in (players['turn'],'None'):
-
-            board_list = position['position']
-            positions(request, board_list, turn, request.session['game'][0])
+            column = position['position']
+            positions(request, column, turn, request.session['game'][0])
         else:
             changeturn(request.session['game'][1], turn)
 
