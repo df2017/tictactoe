@@ -66,8 +66,7 @@ class MoveDetail(APIView):
 class MoveList(APIView):
     def get(self, request):
         list = Move.objects.all()
-        param = list.objects.get('position')
-        data = MoveSerializer(param, many=True).data
+        data = MoveSerializer(list, many=True).data
         return Response(data)
 
 class BoardApiUpdate(APIView):
