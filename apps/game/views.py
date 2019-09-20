@@ -23,7 +23,7 @@ class BoardView(View):
             users = response1.json()
             game = response2.json()['id']
             request.session['game'] = [game,users['id']]
-            return render(request, self.template_name, {'player': users['turn']})
+            return render(request, 'board/board.html', {'player': users['turn']})
         else:
             return HttpResponseRedirect('/')
 
