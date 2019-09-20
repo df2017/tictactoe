@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import TemplateView, View
-from .models import Move
+from django.template import loader
 import requests, random
 
 
@@ -37,14 +37,14 @@ class BoardView(View):
         if response.status_code == 200:
             data = response.json()
             list = [str(data[str(row)]) for row in data if row != 'id'][0:9]
-            return render(request, self.template_name, {'list': list, 'player': user_turn['turn'], 'result': result})
+            return HttpResponse(self.template_name.render({'list': list, 'player': user_turn['turn'], 'result': result}, request))
         else:
             return HttpResponseRedirect('/')
 
 
 def positions(request, column, u, p):
     # search position and update board #
-    template_name = 'board/board.html'
+    template_name = loader.get_template('board/board.html')
     url = "https://tictactoegameapp.herokuapp.com/api_game/position/%s/" % p
     param = {column: u}
     response = requests.put(url=url, data=param)
