@@ -9,7 +9,7 @@ class AboutView(TemplateView):
     template_name = 'home/home.html'
 
 class BoardView(View):
-    template_name = 'board/board.html'
+    template_name = loader.get_template('board/board.html')
     url1 = "https://tictactoegameapp.herokuapp.com/api_game/player/"
     url2 = "https://tictactoegameapp.herokuapp.com/api_game/list/"
     url3 =  "https://tictactoegameapp.herokuapp.com/api_game/list/%s/"
@@ -44,7 +44,7 @@ class BoardView(View):
 
 def positions(request, column, u, p):
     # search position and update board #
-    template_name = loader.get_template('board/board.html')
+    template_name = 'board/board.html'
     url = "https://tictactoegameapp.herokuapp.com/api_game/position/%s/" % p
     param = {column: u}
     response = requests.put(url=url, data=param)
