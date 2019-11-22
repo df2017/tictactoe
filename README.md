@@ -13,6 +13,6 @@ Game Tic Tac TToe
   - Multiple boards
   - Objective: The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row wins the game.
 
-# Lync game
+# Game Link 
 
   - https://tictactoegameapp.herokuapp.com/
