@@ -19,7 +19,7 @@ class BoardView(View):
         turn = random.choice('XO')
         response1 = requests.post(url=self.url1,data={"turn":str(turn)})
         response2 = requests.post(url=self.url2)
-        if response1.status_code == 200 and response2.status_code == 200:
+        if response1.status_code == 201 and response2.status_code == 201:
             users = response1.json()
             game = response2.json()['id']
             request.session['game'] = [game,users['id']]
